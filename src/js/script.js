@@ -130,12 +130,13 @@
         if (activeProduct && activeProduct != thisProduct.element) {
           activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
           console.log('remove class active');
-          /* } else {
-            thisProduct.element.classList.add('active');
-          } */
-          /* toggle active class on thisProduct.element */
-          thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
-        });
+        }
+        /* } else {
+          thisProduct.element.classList.add('active');
+        } */
+        /* toggle active class on thisProduct.element */
+        thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
+      });
     }
   }
 }
