@@ -81,14 +81,14 @@
       console.log('AmountWidget: ', thisWidget);
       console.log('construktor arguments: ', element);
       thisWidget.getElements(element);
-      thisWidget.setValue(settings.amountWidget.defaultValue);
+      thisWidget.setValue(thisWidget.input.value || settings.amountWidget.defaultValue);
       thisWidget.initActions();
     }
     getElements(element) {
       const thisWidget = this;
 
       thisWidget.element = element;
-      thisWidget.input = element.querySelector(select.widgets.amount.input);
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
       thisWidget.linkDecrease = element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = element.querySelector(select.widgets.amount.linkIncrease);
     }
