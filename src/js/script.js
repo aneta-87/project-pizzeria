@@ -187,6 +187,23 @@
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
       console.log('thisCart.products: ', thisCart.products);
     }
+    update() { //new method
+      const thisCart = this;
+      const deliveryFee = settings.cart.defaultDeliveryFee;
+      thisCart.totalNumber = 0;
+     thisCart.subTotalPrice = 0;
+      for(let product of thisCart.products) {
+        thisCart.totalNumber += product.amount; // zwiększa totalNr o liczbę sztuk danego produktu
+        thisCart.subTotalPrice += product.price; //  zwiększa subTotalPrice o jego price
+      }
+      if(thisCart.totalNumber &&  thisCart.totalNumber > 0) {
+      thisCart.totalPrice = thisCart.subTotalPrice + deliveryFee;
+        thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+      } else {
+        thisCart.dom.deliveryFee.innerHTML = 0;
+        thisCart.totalPrice = 0;
+      }
+    }
   }
   class CartProduct {
     constructor(menuProduct, element) {
@@ -200,6 +217,7 @@
       thisCartProduct.price = menuProduct.price;
 
       thisCartProduct.getElements(element);
+    
       thisCartProduct.initAmountWidget();
       console.log('thisCartProduct: ', thisCartProduct);
     }
@@ -446,6 +464,7 @@
     addToCart() {
       const thisProduct = this;
       app.cart.add(thisProduct.prepareCartProduct());
+
     }
 
     prepareCartProductParams() {
