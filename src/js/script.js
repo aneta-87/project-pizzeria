@@ -27,7 +27,7 @@
     },
     widgets: {
       amount: {
-        input: 'input[name="amount"]',
+        input: 'input.amount', //changed
         linkDecrease: 'a[href="#less"]',
         linkIncrease: 'a[href="#more"]',
       },
@@ -88,7 +88,8 @@
       const thisWidget = this;
 
       thisWidget.element = element;
-      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.input = element.querySelector(select.widgets.amount.input);
+      console.log('thisWidget.Input:',thisWidget.input);
       thisWidget.linkDecrease = element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = element.querySelector(select.widgets.amount.linkIncrease);
     }
@@ -143,13 +144,29 @@
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = element.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = element.querySelector(select.cart.productList);
+      thisCart.dom.deliveryFee = element.querySelector(select.cart.deliveryFee);
+      thisCart.dom.subTotalPrice = element.querySelector(select.cart.subtotalPrice);
+      thisCart.dom.totalPrice = element.querySelectorAll(select.cart.totalPrice);
+      thisCart.dom.totalNumber = element.querySelector(select.cart.totalNumber);
+      thisCart.dom.form = element.querySelector(select.cart.form);
     }
     initActions() {
       const thisCart = this;
       thisCart.dom.toggleTrigger.addEventListener('click', function () {
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
-    }
+    thisCart.dom.productList.addEventListener('updated', function() {
+      thisCart.update();
+    });
+    thisCart.dom.productList.addEventListener('remove', function(event) {
+      thisCart.remove(event.detail.cartProduct);
+    });
+    thisCart.dom.form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      thisCart.sendOrder();
+    });
+  }
+  
     add(menuProduct) {
       const thisCart = this;
       console.log('adding product', menuProduct);
@@ -324,8 +341,8 @@
         thisProduct.processOrder();
       });
 
-      for (let input of thisProduct.formInputs) {
-        input.addEventListener('change', function () {
+      for (let input of thisProduct.dom.formInputs) {
+        input.addEventListener('change', function (event) {
           thisProduct.processOrder();
         });
       }
@@ -446,6 +463,5 @@
     }
   }
   app.init();
-
 }
 
