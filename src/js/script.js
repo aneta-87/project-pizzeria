@@ -103,6 +103,7 @@
     setValue(value) {
       const thisWidget = this;
       const newValue = parseInt(value);
+      
       console.log('isNaN(newValue): ', isNaN(newValue));
       if (thisWidget.value !== newValue
         && !isNaN(newValue)
